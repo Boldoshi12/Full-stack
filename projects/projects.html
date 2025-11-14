@@ -1,10 +1,789 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="mn" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Бүтээл - Full Stack Developer</title>
 
+    <link rel="stylesheet" href="../src/output.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- Typed.js нэмсэн -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=JetBrains+Mono&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(249, 115, 22, 0.2);
+        }
+        
+        /* Pulse Glow */
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(249, 115, 22, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(249, 115, 22, 0.8); }
+        }
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        .project-item {
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px 0 rgba(249, 115, 22, 0.2);
+        }
+
+        .project-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(249, 115, 22, 0.4);
+        }
+
+        .project-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, transparent 50%, rgba(251, 146, 60, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        .project-item:hover::after {
+            opacity: 1;
+        }
+
+
+        /* 3D Card Tilt */
+        .tilt-card {
+            transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+            transition: all 0.4s ease;
+        }
+
+        .principle-card {
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px 0 rgba(249, 115, 22, 0.15);
+        }
+
+        .principle-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(249, 115, 22, 0.3);
+        }
+
+        .project-image {
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .project-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 60px rgba(249, 115, 22, 0.4);
+        }
+
+        .project-image img {
+            transition: all 0.4s ease;
+        }
+
+        .project-image:hover img {
+            filter: brightness(1.1);
+        }
+
+        /* Scroll Progress Bar */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #f97316, #fb923c, #fdba74);
+            z-index: 9999;
+            transition: width 0.1s ease;
+            box-shadow: 0 0 10px rgba(249, 115, 22, 0.5);
+        }
+
+        /* Enhanced Navbar */
+        nav {
+            transition: all 0.3s ease;
+        }
+        nav.scrolled {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Enhanced Mobile Menu */
+        #mobile-menu {
+            backdrop-filter: blur(20px);
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(30, 0, 50, 0.95));
+            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        #mobile-menu::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        #mobile-menu.hidden {
+            display: none;
+        }
+        #mobile-menu:not(.hidden) {
+            display: flex;
+            opacity: 1;
+            visibility: visible;
+        }
+        #mobile-menu > * {
+            position: relative;
+            z-index: 10;
+        }
+        #mobile-menu a {
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 1rem 2rem;
+            border-radius: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 80%;
+            max-width: 300px;
+            text-align: center;
+            transform: translateY(30px);
+            opacity: 0;
+            transition-delay: calc(var(--i, 0) * 0.1s);
+        }
+        #mobile-menu:not(.hidden) a {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        #mobile-menu a:hover {
+            background: rgba(249, 115, 22, 0.2);
+            border-color: rgba(251, 146, 60, 0.5);
+            transform: translateX(10px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(249, 115, 22, 0.3);
+        }
+        #mobile-menu a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: linear-gradient(180deg, #f97316, #fb923c);
+            border-radius: 1rem 0 0 1rem;
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+        #mobile-menu a:hover::before {
+            transform: scaleY(1);
+        }
+        #mobile-menu a::after {
+            content: '→';
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%) translateX(-10px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+        }
+        #mobile-menu a:hover::after {
+            opacity: 1;
+            transform: translateY(-50%) translateX(0);
+        }
+        #mobile-menu-close {
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        #mobile-menu-close:hover {
+            background: rgba(251, 146, 60, 0.3);
+            border-color: rgba(251, 146, 60, 0.5);
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        .gradient-animated {
+            color: #f97316;
+        }
+    </style>
+</head>
+<body class="bg-black text-white overflow-x-hidden">
+
+<!-- Scroll Progress Bar -->
+<div id="scroll-progress" style="width: 0%"></div>
+
+<div id="particles-js" class="fixed inset-0 -z-10"></div>
+
+<!-- Navigation -->
+<nav id="navbar" class="fixed top-0 w-full z-50 glass">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-orange-400">FULL STACK DEVELOPER</h1>
+        <div class="hidden md:flex space-x-8">
+            <a href="../index.html" class="hover:text-orange-400 transition relative group">Нүүр
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-orange-400 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a href="../about/about.html" class="hover:text-orange-400 transition relative group">Тухай
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-orange-400 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a href="../skills/skills.html" class="hover:text-orange-400 transition relative group">Ур чадвар
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-orange-400 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a href="../projects/projects.html" class="text-orange-400 relative group">Бүтээл
+                <span class="absolute bottom-0 left-0 w-full h-0.5 bg-orange-400"></span>
+            </a>
+            <a href="../index.html#contact" class="hover:text-orange-400 transition relative group">Холбогдох
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-orange-400 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+        </div>
+        <button id="mobile-menu-btn" class="md:hidden">
+            <i data-lucide="menu" class="w-8 h-8"></i>
+        </button>
+    </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="fixed inset-0 bg-black/95 z-40 hidden flex flex-col items-center justify-center space-y-6 text-2xl">
+    <button id="mobile-menu-close" class="absolute top-6 right-6">
+        <i data-lucide="x" class="w-8 h-8"></i>
+    </button>
+    <a href="../index.html" class="hover:text-orange-400 transition" style="--i: 0">🏠 Нүүр</a>
+    <a href="../about/about.html" class="hover:text-orange-400 transition" style="--i: 1">👤 Тухай</a>
+    <a href="../skills/skills.html" class="hover:text-orange-400 transition" style="--i: 2">⚡ Ур чадвар</a>
+    <a href="../projects/projects.html" class="text-orange-400 transition" style="--i: 3">💼 Бүтээл</a>
+    <a href="../index.html#contact" class="hover:text-orange-400 transition" style="--i: 4">📧 Холбогдох</a>
+</div>
+
+<!-- HERO SECTION - Typed.js нэмсэн -->
+<section class="min-h-screen flex items-center justify-center relative">
+    <div class="text-center px-6" data-aos="zoom-in">
+        <h1 class="text-6xl md:text-9xl font-black mb-6">
+            <span class="text-orange-400">
+                БҮТЭЭЛҮҮД
+            </span>
+        </h1>
+        <p class="text-3xl md:text-5xl mb-6 font-light">
+            <span id="typed" class="text-orange-400 font-bold"></span>
+        </p>
+        <p class="text-xl md:text-2xl text-gray-400 mb-10 max-w-5xl mx-auto">
+            Та бүхэн <span class="text-amber-400 font-bold">хэрэгтэй болгоноо</span> бидэнд даатга
+        </p>
+
+        <div class="flex justify-center space-x-6 mb-10">
+            <a href="#" class="p-4 rounded-full glass hover:scale-125 transition pulse-glow"><i data-lucide="github" class="w-8 h-8"></i></a>
+            <a href="#" class="p-4 rounded-full glass hover:scale-125 transition pulse-glow"><i data-lucide="linkedin" class="w-8 h-8"></i></a>
+            <a href="#" class="p-4 rounded-full glass hover:scale-125 transition pulse-glow"><i data-lucide="twitter" class="w-8 h-8"></i></a>
+        </div>
+
+        <a href="#projects-section" class="inline-block px-12 py-6 bg-gradient-to-r from-orange-600 to-amber-600 rounded-full text-2xl font-bold hover:shadow-2xl hover:scale-110 transition transform">
+            Бүтээлүүдийг үзэх
+        </a>
+    </div>
+</section>
+
+<!-- Projects -->
+<section id="projects-section" class="py-20 px-6">
+    <div class="max-w-7xl mx-auto space-y-16">
+
+        <!-- Project 1: E-Commerce Store -->
+        <div class="project-item glass rounded-3xl p-8" data-aos="fade-up">
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="text-5xl">🛒</div>
+                        <div>
+                            <h2 class="text-3xl font-bold text-orange-400">Online Худалдаа</h2>
+                            <p class="text-gray-400">E-Commerce Platform</p>
+                        </div>
+                    </div>
+
+                    <div class="glass border-l-4 border-orange-500 rounded-xl p-6 mb-4">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-2xl">👨‍💻</span>
+                            <h4 class="text-lg font-bold text-orange-400">Developer-ийн хийсэн зүйлс</h4>
+                        </div>
+                        <p class="text-sm text-gray-300 font-mono leading-relaxed">
+                            React + Next.js Front-End, Node.js + Express Back-End API, MongoDB database, Stripe payment integration, JWT authentication, Redis cache, AWS S3 image storage, Vercel deployment ашиглан Вебсайтыг танд ба Худалдаалагч талыг холбож өгдөг.
+                        </p>
+                    </div>
+
+                    <div class="glass border-l-4 border-amber-500 rounded-xl p-6 mb-6">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-2xl">🧑</span>
+                            <h4 class="text-lg font-bold text-amber-400">Энгийнээр тайлбарлавал</h4>
+                        </div>
+                        <p class="text-gray-300 leading-relaxed">
+                            Та ямар ч барааг <strong>БАЙГАА ГАЗАРТАА</strong> хүргүүлж авмаар байна. Online худалдааны вэбсайт руу орно → олон төрлийн бараа харагдана → Дуртай бараагаа сонгоно → сагсанд хийнэ → Төлбөрөө төлнө → "Баярлалаа, таны захиалгыг хүлээн авлаа" гэсэн мэдэгдэл ирнэ. Хүссэн газар чинь хүргээд өгнө
+                        </p>
+                    </div>
+
+                    <div class="space-y-3 mb-6">
+                        <h4 class="font-bold text-lg mb-3">⚙️ Онцлох технологиуд</h4>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="glass rounded-lg p-3">
+                                <p class="text-xs text-orange-400 font-semibold mb-1">Төлбөр</p>
+                                <p class="text-sm text-gray-300">Банкнаас авч банкинд хүргэх</p>
+                            </div>
+                            <div class="glass rounded-lg p-3">
+                                <p class="text-xs text-orange-400 font-semibold mb-1">Interest</p>
+                                <p class="text-sm text-gray-300">Автоматаар хэрэглэгчид таалагдах зүйлсийг ачааллах</p>
+                            </div>
+                            <div class="glass rounded-lg p-3">
+                                <p class="text-xs text-orange-400 font-semibold mb-1">Хурд</p>
+                                <p class="text-sm text-gray-300">1 секунд дотор ачаалагдаж шинэ бараа бүтээгдэхүүн шинэчлэгдэнэ</p>
+                            </div>
+                            <div class="glass rounded-lg p-3">
+                                <p class="text-xs text-orange-400 font-semibold mb-1">Аюулгүй</p>
+                                <p class="text-sm text-gray-300">Таны гэсэн бүхнийг аюулгүй системээр хамгаалах</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs px-3 py-1 bg-orange-500/20 border border-orange-500/50 rounded-full text-orange-300">Next.js</span>
+                        <span class="text-xs px-3 py-1 bg-orange-500/20 border border-orange-500/50 rounded-full text-orange-300">MongoDB</span>
+                        <span class="text-xs px-3 py-1 bg-orange-500/20 border border-orange-500/50 rounded-full text-orange-300">Stripe</span>
+                        <span class="text-xs px-3 py-1 bg-orange-500/20 border border-orange-500/50 rounded-full text-orange-300">AWS</span>
+                    </div>
+                </div>
+
+                <a href="https://www.amazon.com/" target="_blank" class="flex items-center justify-center">
+                    <div class="glass rounded-2xl p-4 w-full hover:scale-105 duration-300">
+                        <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=400&fit=crop" alt="E-Commerce" class="w-full h-64 object-cover rounded-xl mb-4">
+                        <p class="text-2xl font-bold mb-2 text-center">Amazon Style Store</p>
+                        <p class="text-gray-400 text-center">Click to visit →</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Project 2: Social Media App -->
+        <div class="project-item glass rounded-3xl p-8" data-aos="fade-up" data-aos-delay="100">
+            <div class="grid md:grid-cols-2 gap-8">
+                <a href="https://www.facebook.com/" target="_blank" class="flex items-center justify-center order-2 md:order-1">
+                    <div class="glass rounded-2xl p-4 w-full hover:scale-105 duration-300">
+                        <img src="../skills/pic/fb.png" alt="Social Media" class="w-full h-64 object-cover rounded-xl mb-4">
+                        <p class="text-2xl font-bold mb-2 text-center">Social Network</p>
+                        <p class="text-gray-400 text-center">Click to visit →</p>
+                    </div>
+                </a>
+
+                <div class="order-1 md:order-2">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="text-5xl">📱</div>
+                        <div>
+                            <h2 class="text-3xl font-bold text-orange-400">Нийгмийн Сүлжээ</h2>
+                            <p class="text-gray-400">Social Network Platform</p>
+                        </div>
+                    </div>
+
+                    <div class="glass border-l-4 border-orange-500 rounded-xl p-6 mb-4">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-2xl">👨‍💻</span>
+                            <h4 class="text-lg font-bold text-orange-400">Developer-ийн хийсэн зүйлс</h4>
+                        </div>
+                        <p class="text-sm text-gray-300 font-mono leading-relaxed">
+                            React Native cross-platform app, GraphQL API, PostgreSQL relational database, Socket.io real-time messaging, AWS Lambda serverless functions, Cloudinary media processing ашиглаж хүссэн мэдээллийн төрлийг цаг алдалгүй дамжуулах системийг бид нэвтрүүлсэн
+                        </p>
+                    </div>
+
+                    <div class="glass border-l-4 border-amber-500 rounded-xl p-6 mb-6">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-2xl">🧑</span>
+                            <h4 class="text-lg font-bold text-amber-400">Энгийнээр тайлбарлавал</h4>
+                        </div>
+                        <p class="text-gray-300 leading-relaxed">
+                            Та Social Network Platform ашиглаж хаанаас бол хаанаас интернэтэд холбогдож хэрэгтэй мэдээллээ цаг алдалгүй авдаг. Зураг текст дамжуулах хамгийн шилдэг шийдэл нь энэ юм.
+                        </p>
+                    </div>
+
+                    <div class="space-y-3 mb-6">
+                        <h4 class="font-bold text-lg mb-3">⚙️ Онцлох технологиуд</h4>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="glass rounded-lg p-3">
+                                <p class="text-xs text-orange-400 font-semibold mb-1">Chat</p>
+                                <p class="text-sm text-gray-300">Мессенж шууд очно</p>
+                            </div>
+                            <div class="glass rounded-lg p-3">
+                                <p class="text-xs text-orange-400 font-semibold mb-1">Notification</p>
+                                <p class="text-sm text-gray-300">Push мэдэгдэл ирнэ</p>
+                            </div>
+                            <div class="glass rounded-lg p-3">
+                                <p class="text-xs text-orange-400 font-semibold mb-1">Offline</p>
+                                <p class="text-sm text-gray-300">Интернетгүй ч хадгалагдсан зүйлс харагдана</p>
+                            </div>
+                            <div class="glass rounded-lg p-3">
+                                <p class="text-xs text-orange-400 font-semibold mb-1">Media</p>
+                                <p class="text-sm text-gray-300">Видео автомат compress</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs px-3 py-1 bg-orange-500/20 border border-orange-500/50 rounded-full text-orange-300">React Native</span>
+                        <span class="text-xs px-3 py-1 bg-orange-500/20 border border-orange-500/50 rounded-full text-orange-300">GraphQL</span>
+                        <span class="text-xs px-3 py-1 bg-orange-500/20 border border-orange-500/50 rounded-full text-orange-300">PostgreSQL</span>
+                        <span class="text-xs px-3 py-1 bg-orange-500/20 border border-orange-500/50 rounded-full text-orange-300">Socket.io</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 3: Food Delivery -->
+        <div class="project-item glass rounded-3xl p-8" data-aos="fade-up" data-aos-delay="200">
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="text-5xl">🍔</div>
+                        <div>
+                            <h2 class="text-3xl font-bold text-orange-400">Хоол Хүргэлт</h2>
+                            <p class="text-gray-400">Food Delivery Service</p>
+                        </div>
+                    </div>
+
+                    <div class="glass border-l-4 border-orange-500 rounded-xl p-6 mb-4">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-2xl">👨‍💻</span>
+                            <h4 class="text-lg font-bold text-orange-400">Developer-ийн хийсэн зүйлс</h4>
+                        </div>
+                        <p class="text-sm text-gray-300 font-mono leading-relaxed">
+                            Microservices architecture, User/Restaurant/Delivery separate services, MongoDB sharded clusters, Google Maps API integration, WebSocket order tracking, Redis queue system ашиглан энэ хоол хүргэлтийн системийг зохиосон.
+                        </p>
+                    </div>
+
+                    <div class="glass border-l-4 border-yellow-500 rounded-xl p-6 mb-6">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-2xl">🧑</span>
+                            <h4 class="text-lg font-bold text-yellow-400">Энгийнээр тайлбарлавал</h4>
+                        </div>
+                        <p class="text-gray-300 leading-relaxed">
+                            Хоол хүргэлтийн систем гэдэг нь ресторанаас эсвэл хоолны газар захиалга өгөөд, тухайн хоолыг гэртээ эсвэл ажил дээрээ шууд хүргүүлдэг үйлчилгээг хэлдэг. Та аппликейшн эсвэл вэб сайтаар хоол сонгож, төлбөрөө төлөөд, мотоцикл, машин эсвэл явган курьер хоолыг хүргэдэг.
+                        </p>
+                    </div>
+
+                    <div class="space-y-3 mb-6">
+                        <h4 class="font-bold text-lg mb-3">⚙️ Онцлох технологиуд</h4>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="glass rounded-lg p-3">
+                                <p class="text-xs text-orange-400 font-semibold mb-1">GPS</p>
+                                <p class="text-sm text-gray-300">Хүргэгч хаана байгааг шууд харна</p>
+                            </div>
+                            <div class="glass rounded-lg p-3">
+                                <p class="text-xs text-orange-400 font-semibold mb-1">Queue</p>
+                                <p class="text-sm text-gray-300">Захиалга дарааллаар</p>
+                            </div>
+                            <div class="glass rounded-lg p-3">
+                                <p class="text-xs text-orange-400 font-semibold mb-1">Scalable</p>
+                                <p class="text-sm text-gray-300">1000 захиалга зэрэг</p>
+                            </div>
+                            <div class="glass rounded-lg p-3">
+                                <p class="text-xs text-orange-400 font-semibold mb-1">Status</p>
+                                <p class="text-sm text-gray-300">Явц нь тодорхой харагдана</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs px-3 py-1 bg-orange-500/20 border border-orange-500/50 rounded-full text-orange-300">Microservices</span>
+                        <span class="text-xs px-3 py-1 bg-orange-500/20 border border-orange-500/50 rounded-full text-orange-300">MongoDB</span>
+                        <span class="text-xs px-3 py-1 bg-orange-500/20 border border-orange-500/50 rounded-full text-orange-300">Maps API</span>
+                        <span class="text-xs px-3 py-1 bg-orange-500/20 border border-orange-500/50 rounded-full text-orange-300">WebSocket</span>
+                    </div>
+                </div>
+
+                <a href="https://www.ubereats.com/" target="_blank" class="flex items-center justify-center hover:scale-105 duration-300">
+                    <div class="glass rounded-2xl p-4 w-full">
+                        <img src="https://images.unsplash.com/photo-1526367790999-0150786686a2?w=600&h=400&fit=crop" alt="Food Delivery" class="w-full h-64 object-cover rounded-xl mb-4">
+                        <p class="text-2xl font-bold mb-2 text-center">Food Delivery App</p>
+                        <p class="text-gray-400 text-center">Click to visit →</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Project 4: Task Management -->
+        <div class="project-item glass rounded-3xl p-8 " data-aos="fade-up" data-aos-delay="300" >
+            <div class="grid md:grid-cols-2 gap-8">
+                <a href="https://www.notion.so/" target="_blank" class="flex items-center justify-center order-2 md:order-1">
+                    <div class="glass rounded-2xl p-4 w-full hover:scale-105 duration-300">
+                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&h=400&fit=crop" alt="Task Management" class="w-full h-64 object-cover rounded-xl mb-4">
+                        <p class="text-2xl font-bold mb-2 text-center">Collaboration Tool</p>
+                        <p class="text-gray-400 text-center">Click to visit →</p>
+                    </div>
+                </a>
+
+                <div class="order-1 md:order-2">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="text-5xl">📋</div>
+                        <div>
+                            <h2 class="text-3xl font-bold text-orange-400">Ажлын Менежмент Программ</h2>
+                            <p class="text-gray-400">Team Collaboration Tool</p>
+                        </div>
+                    </div>
+
+                    <div class="glass border-l-4 border-orange-500 rounded-xl p-6 mb-4">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-2xl">👨‍💻</span>
+                            <h4 class="text-lg font-bold text-orange-400">Developer-ийн хийсэн зүйлс</h4>
+                        </div>
+                        <p class="text-sm text-gray-300 font-mono leading-relaxed">
+                            Next.js SSR, Prisma ORM with PostgreSQL, NextAuth.js authentication, Drag-and-drop with React DnD, Real-time collaboration via Pusher, Vercel edge functions, TypeScript type safety ашиглан багийн даалгавар удирдах, чатлах, файлыг хуваалцах, төсөл зохион байгуулах систем
+                        </p>
+                    </div>
+
+                    <div class="glass border-l-4 border-amber-500 rounded-xl p-6 mb-6">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-2xl">🧑</span>
+                            <h4 class="text-lg font-bold text-amber-400">Энгийнээр тайлбарлавал</h4>
+                        </div>
+                        <p class="text-gray-300 leading-relaxed">
+                            Багийн гишүүд нэг дор ажиллах, мэдээлэл хуваалцах, даалгавар хянах, төсөл удирдах боломж олгодог программ юм. Энэ програм ашигласнаар багийн хүн бүр ямар даалгавар дээр ажиллаж байгааг харах, уулзалт товлох, файлуудыг нэг дор хадгалах боломжтой.
+                        </p>
+                    </div>
+
+                    <div class="space-y-3 mb-6">
+                        <h4 class="font-bold text-lg mb-3">⚙️ Онцлох технологиуд</h4>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="glass rounded-lg p-3">
+                                <p class="text-xs text-orange-400 font-semibold mb-1">Real-time sync</p>
+                                <p class="text-sm text-gray-300">Хүснэгт, мэдээллийг шууд шинэчлэх</p>
+                            </div>
+                            <div class="glass rounded-lg p-3">
+                                <p class="text-xs text-orange-400 font-semibold mb-1">Push notifications</p>
+                                <p class="text-sm text-gray-300">Шинэчлэлт, мэдэгдлийг шууд дамжуулах</p>
+                            </div>
+                            <div class="glass rounded-lg p-3">
+                                <p class="text-xs text-orange-400 font-semibold mb-1">User authentication</p>
+                                <p class="text-sm text-gray-300">Хэрэглэгчийг баталгаажуулах</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs px-3 py-1 bg-orange-500/20 border border-orange-500/50 rounded-full text-orange-300">Next.js</span>
+                        <span class="text-xs px-3 py-1 bg-orange-500/20 border border-orange-500/50 rounded-full text-orange-300">TypeScript</span>
+                        <span class="text-xs px-3 py-1 bg-orange-500/20 border border-orange-500/50 rounded-full text-orange-300">Prisma</span>
+                        <span class="text-xs px-3 py-1 bg-orange-500/20 border border-orange-500/50 rounded-full text-orange-300">PostgreSQL</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Key Learnings - Баримтлах зарчим (hover effect нэмсэн) -->
+<section class="py-20 px-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16" data-aos="fade-up">
+            <h2 class="text-4xl md:text-5xl font-black mb-4">
+                <span class="text-orange-400">
+                    🎓 Баримтлах зарчим
+                </span>
+            </h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="principle-card glass rounded-2xl p-6 text-center hover:scale-110" data-aos="zoom-in">
+                <div style="font-size: 4rem; line-height: 1; margin-bottom: 1rem;">🏗️</div>
+                <h3 class="text-xl font-bold mb-3 text-orange-400">Системийн Бүтэц</h3>
+                <p class="text-sm text-gray-300">Системийн зохион байгуулалт ойлгомжтой тодорхой байх</p>
+            </div>
+
+            <div class="principle-card glass rounded-2xl p-6 text-center hover:scale-110" data-aos="zoom-in" data-aos-delay="100">
+                <div style="font-size: 4rem; line-height: 1; margin-bottom: 1rem;">⚡</div>
+                <h3 class="text-xl font-bold mb-3 text-orange-400">Хурд & Оновчлол</h3>
+                <p class="text-sm text-gray-300">Олон хүн зэрэг ашиглаад ч системийг хурдан ажиллуулах</p>
+            </div>
+
+            <div class="principle-card glass rounded-2xl p-6 text-center hover:scale-110" data-aos="zoom-in" data-aos-delay="200">
+                <div style="font-size: 4rem; line-height: 1; margin-bottom: 1rem;">🔒</div>
+                <h3 class="text-xl font-bold mb-3 text-orange-400">Аюулгүй Байдал</h3>
+                <p class="text-sm text-gray-300">Хэрэглэгчийн мэдээлэл, төлбөр, нууц үг хамгаалах</p>
+            </div>
+
+            <div class="principle-card glass rounded-2xl p-6 text-center hover:scale-110" data-aos="zoom-in" data-aos-delay="300">
+                <div style="font-size: 4rem; line-height: 1; margin-bottom: 1rem;">👥</div>
+                <h3 class="text-xl font-bold mb-3 text-orange-400">Хэрэглэгчийн Тааламж</h3>
+                <p class="text-sm text-gray-300">Хялбар, ойлгомжтой, найзархаг дизайн бүтээх</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="py-20 px-6">
+    <div class="max-w-4xl mx-auto text-center" data-aos="zoom-in">
+        <div class="glass rounded-3xl p-12">
+            <h2 class="text-4xl md:text-5xl font-black mb-6">
+                <span class="text-orange-400">
+                    Энэ бол Developer бидний хийж бүтээсэн нэгээхэн жишээ
+                </span>
+            </h2>
+            <p class="text-xl text-gray-300 mb-8">
+                Бид одоог хүртэл өсөн дэвжиж байна. <br>
+                <strong>Хамтдаа хичээцгээе!</strong>
+            </p>
+            <div class="flex gap-4 justify-center flex-wrap">
+                <a href="../index.html#contact" class="inline-block px-10 py-5 bg-gradient-to-r from-orange-600 to-amber-600 rounded-full text-xl font-bold hover:scale-105 transition transform shadow-2xl">
+                    Холбогдох →
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-10 text-center text-gray-500">
+    <p>&copy; 2025 Khan Khulgun. Бүх эрх хуулиар хамгаалагдсан.</p>
+</footer>
+
+<script>
+    lucide.createIcons();
+
+    // Typed.js
+    new Typed('#typed', {
+        strings: ['Amazon 🛒', 'Facebook 📱', 'UB Eats 🍔', 'Team Collabration Tool 📋'],
+        typeSpeed: 70,
+        backSpeed: 50,
+        loop: true
+    });
+
+    particlesJS('particles-js', {
+        "particles": { "number": { "value": 80 }, "color": { "value": "#f97316" }, "shape": { "type": "circle" }, "opacity": { "value": 0.5 }, "size": { "value": 3 }, "move": { "speed": 1 } }, "interactivity": { "events": { "onhover": { "enable": true,  } } }
+    });
+
+    AOS.init({ 
+        duration: 1200,
+        once: true,
+        offset: 100
+    });
+
+    // Scroll Progress Bar
+    window.addEventListener('scroll', () => {
+        const scrollProgress = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+        document.getElementById('scroll-progress').style.width = scrollProgress + '%';
+    });
+
+    // Navbar Scroll Effect
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+        const navbar = document.getElementById('navbar');
+        
+        if (currentScroll > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    // Mobile Menu
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuClose = document.getElementById('mobile-menu-close');
+    
+    function openMobileMenu() {
+        if (mobileMenu) {
+            mobileMenu.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            const icon = mobileMenuBtn?.querySelector('i');
+            if (icon) {
+                icon.setAttribute('data-lucide', 'x');
+                lucide.createIcons();
+            }
+        }
+    }
+    
+    function closeMobileMenu() {
+        if (mobileMenu) {
+            mobileMenu.classList.add('hidden');
+            document.body.style.overflow = '';
+            const icon = mobileMenuBtn?.querySelector('i');
+            if (icon) {
+                icon.setAttribute('data-lucide', 'menu');
+                lucide.createIcons();
+            }
+        }
+    }
+    
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (mobileMenu && mobileMenu.classList.contains('hidden')) {
+                openMobileMenu();
+            } else {
+                closeMobileMenu();
+            }
+        });
+    }
+    
+    if (mobileMenuClose) {
+        mobileMenuClose.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeMobileMenu();
+        });
+    }
+
+    if (mobileMenu) {
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                closeMobileMenu();
+            });
+        });
+        
+        mobileMenu.addEventListener('click', (e) => {
+            if (e.target === mobileMenu) {
+                closeMobileMenu();
+            }
+        });
+    }
+
+    // 3D Tilt Effect for Principle Cards
+    document.querySelectorAll('.principle-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+        });
+    });
+</script>
 </body>
 </html>

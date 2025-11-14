@@ -1,10 +1,507 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="mn" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Ур чадвар - Full Stack Developer</title>
 
+    <link rel="stylesheet" href="../src/output.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <!-- AOS Scroll Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- Typed.js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=JetBrains+Mono&display=swap');
+        body { font-family: 'Inter', sans-serif; background: black; color: white; }
+        .glass { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.15); }
+        .gradient-text { color: #10b981; }
+
+        .tilt-card {
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            transform: perspective(1000px) rotateX(0) rotateY(0);
+            transform-style: preserve-3d;
+        }
+
+        .skill-fill { height: 100%; width: 0; transition: width 2.2s ease-out; border-radius: 6px; }
+        .skill-bar { height: 12px; background: rgba(255,255,255,0.12); border-radius: 6px; overflow: hidden; }
+
+        /* Scroll Progress Bar */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #10b981, #34d399, #6ee7b7);
+            z-index: 9999;
+            transition: width 0.1s ease;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+        }
+
+        /* Enhanced Navbar */
+        nav {
+            transition: all 0.3s ease;
+        }
+        nav.scrolled {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Enhanced Mobile Menu */
+        #mobile-menu {
+            backdrop-filter: blur(20px);
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(30, 0, 50, 0.95));
+            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        #mobile-menu::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        #mobile-menu.hidden {
+            display: none;
+        }
+        #mobile-menu:not(.hidden) {
+            display: flex;
+            opacity: 1;
+            visibility: visible;
+        }
+        #mobile-menu > * {
+            position: relative;
+            z-index: 10;
+        }
+        #mobile-menu a {
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 1rem 2rem;
+            border-radius: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 80%;
+            max-width: 300px;
+            text-align: center;
+            transform: translateY(30px);
+            opacity: 0;
+            transition-delay: calc(var(--i, 0) * 0.1s);
+        }
+        #mobile-menu:not(.hidden) a {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        #mobile-menu a:hover {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: rgba(52, 211, 153, 0.5);
+            transform: translateX(10px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+        }
+        #mobile-menu a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: linear-gradient(180deg, #10b981, #34d399);
+            border-radius: 1rem 0 0 1rem;
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+        #mobile-menu a:hover::before {
+            transform: scaleY(1);
+        }
+        #mobile-menu a::after {
+            content: '→';
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%) translateX(-10px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+        }
+        #mobile-menu a:hover::after {
+            opacity: 1;
+            transform: translateY(-50%) translateX(0);
+        }
+        #mobile-menu-close {
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        #mobile-menu-close:hover {
+            background: rgba(52, 211, 153, 0.3);
+            border-color: rgba(52, 211, 153, 0.5);
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        /* Pulse Glow */
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(16, 185, 129, 0.8); }
+        }
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        .gradient-animated {
+            color: #10b981;
+        }
+    </style>
+</head>
+<body class="bg-black text-white overflow-x-hidden">
+
+<!-- Scroll Progress Bar -->
+<div id="scroll-progress" style="width: 0%"></div>
+
+<div id="particles-js" class="fixed inset-0 -z-10"></div>
+
+<!-- Nav -->
+<nav id="navbar" class="fixed top-0 w-full z-50 glass">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-green-400">FULL STACK DEVELOPER</h1>
+        <div class="hidden md:flex space-x-8">
+            <a href="../index.html" class="hover:text-green-400 transition relative group">Нүүр
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-green-400 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a href="../about/about.html" class="hover:text-green-400 transition relative group">Тухай
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-green-400 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a href="#" class="text-green-400 relative group">Ур чадвар
+                <span class="absolute bottom-0 left-0 w-full h-0.5 bg-green-400"></span>
+            </a>
+            <a href="../projects/projects.html" class="hover:text-green-400 transition relative group">Бүтээл
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-green-400 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a href="../index.html#contact" class="hover:text-green-400 transition relative group">Холбогдох
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-green-400 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+        </div>
+        <button id="mobile-menu-btn" class="md:hidden"><i data-lucide="menu" class="w-8 h-8"></i></button>
+    </div>
+</nav>
+
+<div id="mobile-menu" class="fixed inset-0 bg-black/95 z-40 hidden flex flex-col items-center justify-center space-y-6 text-2xl">
+    <button id="mobile-menu-close" class="absolute top-6 right-6">
+        <i data-lucide="x" class="w-8 h-8"></i>
+    </button>
+    <a href="../index.html" class="hover:text-green-400 transition" style="--i: 0">🏠 Нүүр</a>
+    <a href="../about/about.html" class="hover:text-green-400 transition" style="--i: 1">👤 Тухай</a>
+    <a href="#" class="text-green-400 transition" style="--i: 2">⚡ Ур чадвар</a>
+    <a href="../projects/projects.html" class="hover:text-green-400 transition" style="--i: 3">💼 Бүтээл</a>
+    <a href="../index.html#contact" class="hover:text-green-400 transition" style="--i: 4">📧 Холбогдох</a>
+</div>
+
+<!-- HERO SECTION -->
+<section class="min-h-screen flex items-center justify-center relative">
+    <div class="text-center px-6" data-aos="zoom-in">
+        <h1 class="text-6xl md:text-9xl font-black mb-6 leading-tight">
+            <span class="gradient-text">УР ЧАДВАР</span>
+        </h1>
+        <p class="text-3xl md:text-5xl mb-6 font-light">
+            Бид <span id="typed" class="text-green-400 font-bold"></span>
+        </p>
+        <p class="text-xl md:text-2xl text-gray-400 mb-10 max-w-5xl mx-auto">
+            Front-End → Back-End → DevOps хүртэл <span class="text-emerald-400 font-bold">бүгдийг дангаараа</span> гүйцэтгэнэ.<br>
+            Төслийг <span class="text-green-300">хурдан • аюулгүй • үзэмжтэй</span> болгоно.
+        </p>
+
+        <div class="flex justify-center space-x-6 mb-10">
+            <a href="#" class="p-4 rounded-full glass hover:scale-125 transition pulse-glow" aria-label="GitHub"><i data-lucide="github" class="w-8 h-8"></i></a>
+            <a href="#" class="p-4 rounded-full glass hover:scale-125 transition pulse-glow" aria-label="LinkedIn"><i data-lucide="linkedin" class="w-8 h-8"></i></a>
+            <a href="#" class="p-4 rounded-full glass hover:scale-125 transition pulse-glow" aria-label="Twitter"><i data-lucide="twitter" class="w-8 h-8"></i></a>
+        </div>
+
+        <a href="#technical-skills" class="inline-block px-12 py-6 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full text-2xl font-bold hover:shadow-2xl hover:scale-110 transition transform">
+            Миний ур чадварыг харах
+        </a>
+    </div>
+</section>
+
+<!-- TECHNICAL SKILLS -->
+<section id="technical-skills" class="py-24 px-6">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-5xl font-black text-center mb-16 gradient-text" data-aos="fade-up">ТЕХНИКИЙН УР ЧАДВАР</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="glass p-8 rounded-3xl tilt-card hover:shadow-2xl hover:shadow-green-500/40" data-aos="fade-up" data-aos-delay="0" data-skill="100">
+                <div class="text-6xl mb-4">⚡</div>
+                <h3 class="text-2xl font-bold mb-3">Front-End</h3>
+                <p class="text-gray-300 mb-4">React • Next.js • TypeScript • Tailwind • Framer Motion</p>
+                <div class="skill-bar"><div class="skill-fill bg-gradient-to-r from-green-500 to-emerald-500"></div></div>
+            </div>
+            <div class="glass p-8 rounded-3xl tilt-card hover:shadow-2xl hover:shadow-green-500/40" data-aos="fade-up" data-aos-delay="100" data-skill="100">
+                <div class="text-6xl mb-4">🛠️</div>
+                <h3 class="text-2xl font-bold mb-3">Back-End</h3>
+                <p class="text-gray-300 mb-4">Node.js • Express • NestJS • GraphQL • Prisma</p>
+                <div class="skill-bar"><div class="skill-fill bg-gradient-to-r from-green-500 to-emerald-500"></div></div>
+            </div>
+            <div class="glass p-8 rounded-3xl tilt-card hover:shadow-2xl hover:shadow-green-500/40" data-aos="fade-up" data-aos-delay="200" data-skill="100">
+                <div class="text-6xl mb-4">💾</div>
+                <h3 class="text-2xl font-bold mb-3">Database</h3>
+                <p class="text-gray-300 mb-4">MongoDB • PostgreSQL • Redis • Supabase • Firebase</p>
+                <div class="skill-bar"><div class="skill-fill bg-gradient-to-r from-green-500 to-emerald-500"></div></div>
+            </div>
+            <div class="glass p-8 rounded-3xl tilt-card hover:shadow-2xl hover:shadow-green-500/40" data-aos="fade-up" data-aos-delay="300" data-skill="100">
+                <div class="text-6xl mb-4">🚀</div>
+                <h3 class="text-2xl font-bold mb-3">DevOps & Cloud</h3>
+                <p class="text-gray-300 mb-4">Docker • Vercel • AWS • Netlify • CI/CD • Nginx</p>
+                <div class="skill-bar"><div class="skill-fill bg-gradient-to-r from-green-500 to-emerald-500"></div></div>
+            </div>
+            <div class="glass p-8 rounded-3xl tilt-card hover:shadow-2xl hover:shadow-green-500/40" data-aos="fade-up" data-aos-delay="400" data-skill="100">
+                <div class="text-6xl mb-4">🎨</div>
+                <h3 class="text-2xl font-bold mb-3">UI/UX & Tools</h3>
+                <p class="text-gray-300 mb-4">Figma • Framer • Tailwind • Shadcn • Lucide Icons</p>
+                <div class="skill-bar"><div class="skill-fill bg-gradient-to-r from-green-500 to-emerald-500"></div></div>
+            </div>
+            <div class="glass p-8 rounded-3xl tilt-card hover:shadow-2xl hover:shadow-green-500/40" data-aos="fade-up" data-aos-delay="500" data-skill="100">
+                <div class="text-6xl mb-4">🔒</div>
+                <h3 class="text-2xl font-bold mb-3">Security & Auth</h3>
+                <p class="text-gray-300 mb-4">JWT • OAuth • Clerk • NextAuth • Rate limiting</p>
+                <div class="skill-bar"><div class="skill-fill bg-gradient-to-r from-green-500 to-emerald-500"></div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<!-- WHY CHOOSE US -->
+<section class="py-32 px-6">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-6xl md:text-7xl font-black text-center mb-20 gradient-text" data-aos="fade-up">
+            БУСДААС ЯМАР ОНЦЛОГТОЙ ВЭ?
+        </h2>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-24">
+            <!-- Хурдан -->
+            <div class="glass p-10 rounded-3xl tilt-card text-center" data-aos="fade-up" data-aos-delay="0">
+                <div style="font-size: 6rem; line-height: 1; margin-bottom: 1.5rem;">⚡</div>
+                <p class="text-3xl font-bold text-green-400 mb-2">Хурдан</p>
+                <p class="text-gray-300 text-lg leading-relaxed">1 секундэд ачаалагдах<br><span class="text-green-300">SSR + Edge Functions</span></p>
+            </div>
+
+            <!-- Аюулгүй -->
+            <div class="glass p-10 rounded-3xl tilt-card text-center" data-aos="fade-up" data-aos-delay="100">
+                <div style="font-size: 6rem; line-height: 1; margin-bottom: 1.5rem;">🛡️</div>
+                <p class="text-3xl font-bold text-emerald-400 mb-2">Аюулгүй</p>
+                <p class="text-gray-300 text-lg leading-relaxed">Бүх мэдээлэл шифрлэгдсэн,<br><span class="text-emerald-300">хакердагдашгүй</span></p>
+            </div>
+
+            <!-- Том хэмжээний -->
+            <div class="glass p-10 rounded-3xl tilt-card text-center" data-aos="fade-up" data-aos-delay="200">
+                <div style="font-size: 6rem; line-height: 1; margin-bottom: 1.5rem;">📈</div>
+                <p class="text-3xl font-bold text-green-400 mb-2">Том хэмжээний</p>
+                <p class="text-gray-300 text-lg leading-relaxed">10 → 100,000 хэрэглэгч<br><span class="text-green-300">болох ч тогтвортой</span></p>
+            </div>
+
+            <!-- Хямд -->
+            <div class="glass p-10 rounded-3xl tilt-card text-center" data-aos="fade-up" data-aos-delay="300">
+                <div style="font-size: 6rem; line-height: 1; margin-bottom: 1.5rem;">💰</div>
+                <p class="text-3xl font-bold text-emerald-400 mb-2">Хямд</p>
+                <p class="text-gray-300 text-lg leading-relaxed">Зөвхөн шаардлагатай<br><span class="text-emerald-300">технологийг л ашиглана</span></p>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <div class="glass rounded-3xl p-16 max-w-5xl mx-auto text-center" data-aos="fade-up" data-aos-delay="400">
+            <h2 class="text-6xl md:text-8xl font-black mb-8 gradient-text leading-tight">
+                ТАНЫ ТӨСӨЛД <br> БИД ХЭРЭГТЭЙ ЮУ?
+            </h2>
+            <p class="text-2xl text-gray-300 mb-12 leading-relaxed">
+                Тэгвэл яг одоо бидэнтэй холбогдоод<br>
+                <strong class="text-white">үр дүнтэй, хямд, хурдан</strong> шийдлийг аваарай!
+            </p>
+            <div class="flex gap-4 justify-center flex-wrap">
+                <a href="../index.html#contact" class="inline-block px-10 py-5 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full text-xl font-bold hover:scale-105 transition transform shadow-2xl">
+                    Холбогдох →
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="py-10 text-center text-gray-500">
+    <p>© 2025 Khan Khulgun. Бүх эрх хуулиар хамгаалагдсан.</p>
+</footer>
+
+<script>
+    lucide.createIcons();
+    particlesJS('particles-js', {
+        particles: {
+            number: { value: 80 },
+            color: { value: "#10b981" },
+            shape: { type: "circle" },
+            opacity: { value: 0.5 },
+            size: { value: 3 },
+            move: { speed: 1 }
+        },
+        interactivity: {
+            events: { onhover: { enable: true, mode: "repulse" } }
+        }
+    });
+
+    // AOS Init
+    AOS.init({
+        duration: 1200,
+        easing: 'ease-out-cubic',
+        once: true,
+        offset: 100
+    });
+
+    // Scroll Progress Bar
+    window.addEventListener('scroll', () => {
+        const scrollProgress = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+        document.getElementById('scroll-progress').style.width = scrollProgress + '%';
+    });
+
+    // Navbar Scroll Effect
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+        const navbar = document.getElementById('navbar');
+        
+        if (currentScroll > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    // Mobile Menu
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuClose = document.getElementById('mobile-menu-close');
+    
+    function openMobileMenu() {
+        if (mobileMenu) {
+            mobileMenu.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            const icon = mobileMenuBtn?.querySelector('i');
+            if (icon) {
+                icon.setAttribute('data-lucide', 'x');
+                lucide.createIcons();
+            }
+        }
+    }
+    
+    function closeMobileMenu() {
+        if (mobileMenu) {
+            mobileMenu.classList.add('hidden');
+            document.body.style.overflow = '';
+            const icon = mobileMenuBtn?.querySelector('i');
+            if (icon) {
+                icon.setAttribute('data-lucide', 'menu');
+                lucide.createIcons();
+            }
+        }
+    }
+    
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (mobileMenu && mobileMenu.classList.contains('hidden')) {
+                openMobileMenu();
+            } else {
+                closeMobileMenu();
+            }
+        });
+    }
+    
+    if (mobileMenuClose) {
+        mobileMenuClose.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeMobileMenu();
+        });
+    }
+
+    if (mobileMenu) {
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                closeMobileMenu();
+            });
+        });
+        
+        mobileMenu.addEventListener('click', (e) => {
+            if (e.target === mobileMenu) {
+                closeMobileMenu();
+            }
+        });
+    }
+
+    // Typed.js
+    new Typed('#typed', {
+        strings: ['Full-Stack Master', 'Next.js Ninja', 'Performance Freak', 'Code Architect', 'Problem Crusher'],
+        typeSpeed: 70,
+        backSpeed: 50,
+        loop: true,
+        showCursor: true,
+        cursorChar: '_'
+    });
+
+    // Tilt Effect
+    document.querySelectorAll('.tilt-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateY = (x - centerX) / 20;
+            const rotateX = (centerY - y) / 20;
+            card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
+        });
+        card.addEventListener('mouseenter', () => card.style.transition = 'all 0.15s ease');
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1200px) rotateX(0) rotateY(0) scale(1)';
+            card.style.transition = 'all 0.5s ease';
+        });
+    });
+
+    // Skill Bar Animation
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const fill = entry.target.querySelector('.skill-fill');
+                const percent = entry.target.getAttribute('data-skill');
+                fill.style.width = percent + '%';
+            }
+        });
+    }, { threshold: 0.7 });
+
+    document.querySelectorAll('.tilt-card[data-skill]').forEach(card => observer.observe(card));
+</script>
 </body>
 </html>

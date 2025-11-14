@@ -1,0 +1,17 @@
+@import "tailwindcss";
+@tailwind utilities;
+@config "./tailwind.config.js"; /* файл байхгүй ч заавал бичих ёстой */
+@layer utilities {
+    @supports (hover: hover) {
+        .hover\:scale-110:hover { transform: scale(1.10); }
+        .hover\:scale-125:hover { transform: scale(1.25); }
+        .hover\:scale-150:hover { transform: scale(1.50); }
+        .hover\:scale-110:hover,
+        .hover\:scale-125:hover,
+        .hover\:scale-150:hover {
+            transition: transform 300ms ease-out;
+        }
+    }
+}
+/* Чиний custom CSS энд байж болно */
+@custom-variant dark (&:where(.dark, .dark *));

@@ -5,19 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Full Stack Developer</title>
 
-    <link rel="stylesheet" href="src/output.css">
+    <link rel="stylesheet" href="../src/output.css">
 
-    <!-- Fonts: Google Fonts + Custom -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=JetBrains+Mono&display swap" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
 
-    <!-- Icons: Lucide -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <!-- Icons -->
+    <script src="../assets/lucide.js"></script>
 
     <!-- Typed.js -->
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="../assets/typed.js"></script>
 
-    <!-- Particles.js (background effect) -->
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <!-- Particles.js -->
+    <script src="../assets/particles.min.js"></script>
 
     <!-- AOS Scroll Animation -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -28,36 +28,229 @@
         body { font-family: 'Inter', sans-serif; }
         .font-mono { font-family: 'JetBrains Mono', monospace; }
 
-        /* Glassmorphism */
         .glass {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
         }
 
-        /* 3D Card Tilt */
+        /* Tilt effect */
         .tilt-card {
             transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
             transition: all 0.4s ease;
+            box-shadow: 0 8px 32px 0 rgba(0, 60, 255, 0.15);
+        }
+
+        .tilt-card:hover {
+            box-shadow: 0 20px 50px rgba(0, 60, 255, 0.3);
+        }
+
+        /* Scroll Progress Bar */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #003cff, #6a5cff);
+            z-index: 9999;
+            transition: width 0.1s ease;
+            box-shadow: 0 0 10px rgba(0, 60, 255, 0.5);
+        }
+
+        /* Enhanced Navbar */
+        nav {
+            transition: all 0.3s ease;
+        }
+        nav.scrolled {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Smooth Fade In */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .gradient-animated {
+            color: #003cff;
+        }
+
+        .btn-gradient {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-gradient::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        .btn-gradient:hover::before {
+            left: 100%;
+        }
+
+        #mobile-menu {
+            backdrop-filter: blur(20px);
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(0, 30, 60, 0.95));
+            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        #mobile-menu::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 60, 255, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        #mobile-menu.hidden {
+            display: none;
+        }
+        #mobile-menu:not(.hidden) {
+            display: flex;
+            opacity: 1;
+            visibility: visible;
+        }
+        #mobile-menu > * {
+            position: relative;
+            z-index: 10;
+        }
+        #mobile-menu a {
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 1rem 2rem;
+            border-radius: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 80%;
+            max-width: 300px;
+            text-align: center;
+            transform: translateY(30px);
+            opacity: 0;
+            transition-delay: calc(var(--i, 0) * 0.1s);
+        }
+        #mobile-menu:not(.hidden) a {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        #mobile-menu a:hover {
+            background: rgba(0, 60, 255, 0.2);
+            border-color: rgba(106, 92, 255, 0.5);
+            transform: translateX(10px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 60, 255, 0.3);
+        }
+        #mobile-menu a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: linear-gradient(180deg, #003cff, #6a5cff);
+            border-radius: 1rem 0 0 1rem;
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+        #mobile-menu a:hover::before {
+            transform: scaleY(1);
+        }
+        #mobile-menu a::after {
+            content: '→';
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%) translateX(-10px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+        }
+        #mobile-menu a:hover::after {
+            opacity: 1;
+            transform: translateY(-50%) translateX(0);
+        }
+        #mobile-menu-close {
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        #mobile-menu-close:hover {
+            background: rgba(106, 92, 255, 0.3);
+            border-color: rgba(106, 92, 255, 0.5);
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        /* Pulse Glow */
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 60, 255, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(0, 60, 255, 0.8); }
+        }
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
         }
     </style>
 </head>
+
 <body class="bg-black text-white overflow-x-hidden">
+
+<!-- Scroll Progress Bar -->
+<div id="scroll-progress" style="width: 0%"></div>
 
 <!-- Particle Background -->
 <div id="particles-js" class="fixed inset-0 -z-10"></div>
 
 <!-- Navigation -->
-<nav class="fixed top-0 w-full z-50 glass">
+<nav id="navbar" class="fixed top-0 w-full z-50 glass">
     <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
-        <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">FULL STACK DEVELOPER</h1>
+        <h1 class="text-2xl font-bold gradient-animated">FULL STACK DEVELOPER</h1>
         <div class="hidden md:flex space-x-8">
-            <a href="index.html" class="hover:text-purple-400 transition">Нүүр</a>
-            <a href="about.html" class="hover:text-purple-400 transition">Тухай</a>
-            <a href="skills.html" class="hover:text-purple-400 transition">Ур чадвар</a>
-            <a href="projects.html" class="hover:text-purple-400 transition">Бүтээл</a>
-            <a href="contact.html" class="hover:text-purple-400 transition">Холбогдох</a>
+            <a href="../index.html" class="hover:text-blue-400 transition relative group">Нүүр
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a href="about.html" class="text-blue-400 transition relative group">Тухай
+                <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400"></span>
+            </a>
+            <a href="../skills/skills.html" class="hover:text-blue-400 transition relative group">Ур чадвар
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a href="../projects/projects.html" class="hover:text-blue-400 transition relative group">Бүтээл
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a href="../index.html#contact" class="hover:text-blue-400 transition relative group">Холбогдох
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
+            </a>
         </div>
         <button id="mobile-menu-btn" class="md:hidden">
             <i data-lucide="menu" class="w-8 h-8"></i>
@@ -66,32 +259,36 @@
 </nav>
 
 <!-- Mobile Menu -->
-<div id="mobile-menu" class="fixed inset-0 bg-black/95 z-40 hidden flex-col items-center justify-center space-y-8 text-3xl">
-    <a href="index.html" class="hover:text-purple-400">Нүүр</a>
-    <a href="#about" class="hover:text-purple-400">Тухай</a>
-    <a href="#projects" class="hover:text-purple-400">Төсөл</a>
-    <a href="#contact" class="hover:text-purple-400">Холбогдох</a>
+<div id="mobile-menu" class="fixed inset-0 bg-black/95 z-40 hidden flex flex-col items-center justify-center space-y-6 text-2xl">
+    <button id="mobile-menu-close" class="absolute top-6 right-6">
+        <i data-lucide="x" class="w-8 h-8"></i>
+    </button>
+    <a href="../index.html" class="hover:text-blue-400 transition" style="--i: 0">🏠 Нүүр</a>
+    <a href="about.html" class="text-blue-400 transition" style="--i: 1">👤 Тухай</a>
+    <a href="../skills/skills.html" class="hover:text-blue-400 transition" style="--i: 2">⚡ Ур чадвар</a>
+    <a href="../projects/projects.html" class="hover:text-blue-400 transition" style="--i: 3">💼 Бүтээл</a>
+    <a href="../index.html#contact" class="hover:text-blue-400 transition" style="--i: 4">📧 Холбогдох</a>
 </div>
 
 <!-- HERO -->
 <section id="home" class="min-h-screen flex items-center justify-center relative">
-    <div class="text-center px-6" data-aos="zoom-in">
+    <div class="text-center px-6 fade-in-up" data-aos="zoom-in">
         <h1 class="text-6xl md:text-9xl font-black mb-6">
-        <span class="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent">
-          FULL STACK DEVELOPER
-        </span>
+            <span class="gradient-animated">FULL STACK DEVELOPER</span>
         </h1>
-        <p class="text-3xl md:text-5xl mb-6 font-light">Бид <span id="typed" class="text-purple-400 font-bold"></span></p>
+        <p class="text-3xl md:text-5xl mb-6 font-light">
+            Бид <span id="typed" class="text-blue-400 font-bold"></span>
+        </p>
         <p class="text-xl md:text-2xl text-gray-400 mb-10">Орчин үеийн технологийн салбарын хамгийн эрэлттэй мэргэжилтэн</p>
 
         <div class="flex justify-center space-x-6 mb-10">
-            <a href="#" class="p-4 rounded-full glass hover:scale-125 transition"><i data-lucide="github" class="w-8 h-8"></i></a>
-            <a href="#" class="p-4 rounded-full glass hover:scale-125 transition"><i data-lucide="linkedin" class="w-8 h-8"></i></a>
-            <a href="#" class="p-4 rounded-full glass hover:scale-125 transition"><i data-lucide="twitter" class="w-8 h-8"></i></a>
+            <a href="#" class="p-4 rounded-full glass hover:scale-125 transition pulse-glow" aria-label="GitHub"><i data-lucide="github" class="w-8 h-8"></i></a>
+            <a href="#" class="p-4 rounded-full glass hover:scale-125 transition pulse-glow" aria-label="LinkedIn"><i data-lucide="linkedin" class="w-8 h-8"></i></a>
+            <a href="#" class="p-4 rounded-full glass hover:scale-125 transition pulse-glow" aria-label="Twitter"><i data-lucide="twitter" class="w-8 h-8"></i></a>
         </div>
 
-        <a href="https://www.youtube.com/watch?v=oOx5QnGhMmY" class="inline-block px-12 py-6 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full text-2xl font-bold hover:shadow-2xl hover:scale-110 transition transform">
-            Илүү дэлгэрэнгүй мэдэх.
+        <a href="https://www.youtube.com/watch?v=oOx5QnGhMmY" target="_blank" class="btn-gradient inline-block px-12 py-6 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full text-2xl font-bold hover:shadow-2xl hover:scale-110 transition transform relative">
+            Илүү дэлгэрэнгүй мэдэх →
         </a>
     </div>
 </section>
@@ -99,39 +296,35 @@
 <!-- About -->
 <section id="about" class="py-32 px-6">
     <div class="max-w-5xl mx-auto text-center" data-aos="fade-up">
-        <h2 class="text-6xl font-black mb-10">FULL-STACK DEVELOPER ГЭЖ ХЭН БЭ? ЮУ ХИЙДЭГ ВЭ?</h2>
-        <p class="text-xl leading-relaxed text-gray-300 ">
-            <span class="text-red-400 hover:scale-110 hover:font-bold cursor-pointer select-none">Full Stack Developer буюу хөгжүүлэгч</span>
-            <br>
-            гэдэг нь вэб болон аппликейшнийг бүтээхэд шаардагдах бүх шатны ажлыг хэрэглэгчийн <br>
-            <span class="text-purple-400 hover:scale-110 hover:font-bold cursor-pointer select-none">интерфейсийн дизайн, серверийн логик, өгөгдлийн баазын зохион байгуулалт, өгөгдөл дамжуулах API</span>
-            <br>болон системийн байршуулалт зэрэг бүх процессыг дангаараа гүйцэтгэж чаддаг
-            <span class="text-pink-500 hover:scale-110 hover:font-bold cursor-pointer select-none">программ хангамжийн инженер</span>ийг хэлдэг. Тэд хэрэглэгчийн харж, ашигладаг хэсэг болох Front-end болон серверийн дотоод ажиллагаа, өгөгдлийн урсгалыг хариуцдаг Back-end хэсгийг хоёуланг нь хөгжүүлдэг.
+        <h2 class="text-6xl font-black mb-10 gradient-animated">FULL-STACK DEVELOPER ГЭЖ ХЭН БЭ?</h2>
+        <p class="text-xl leading-relaxed text-gray-300">
+            <span class="text-blue-400 font-bold">Full Stack Developer</span> гэдэг нь вэб болон аппликейшнийг бүтээхэд шаардлагатай
+            бүх шатны ажлыг — хэрэглэгчийн интерфейсийн дизайн, серверийн логик, өгөгдлийн бааз, API, систем байршуулалт —
+            бүгдийг дангаараа гүйцэтгэж чаддаг мэргэжилтэн юм.
         </p>
     </div>
 </section>
 
 <!-- Skills -->
-<section id="skills" class="py-32 px-6 ">
+<section id="skills" class="py-32 px-6">
     <div class="max-w-7xl mx-auto">
-        <h2 class="text-6xl font-black text-center mb-20" data-aos="fade-up">Бидний хийдэг гол зүйлс</h2>
+        <h2 class="text-6xl font-black text-center mb-20 gradient-animated" data-aos="fade-up">Бидний хийдэг гол зүйлс</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <!-- Skill Card -->
-            <div class="glass p-8 rounded-3xl text-center hover:scale-110 transition " data-aos="flip-right">
+            <div class="glass p-8 rounded-3xl text-center hover:scale-110 transition" data-aos="flip-right">
                 <div class="text-6xl mb-4">💻</div>
-                <p class="text-2xl font-bold">Front/Back-End Хөгжүүлэлт</p>
+                <p class="text-2xl font-bold">Front/Back-End хөгжүүлэлт</p>
             </div>
-            <div class="glass p-8 rounded-3xl text-center hover:scale-110 transition " data-aos="flip-right" data-aos-delay="100">
+            <div class="glass p-8 rounded-3xl text-center hover:scale-110 transition" data-aos="flip-right" data-aos-delay="100">
                 <div class="text-6xl mb-4">🔗</div>
-                <p class="text-2xl font-bold">API холболт хийх(Front/Back-End холболт)</p>
+                <p class="text-2xl font-bold">API холболт</p>
             </div>
-            <div class="glass p-8 rounded-3xl text-center hover:scale-110 transition " data-aos="flip-left" data-aos-delay="200">
+            <div class="glass p-8 rounded-3xl text-center hover:scale-110 transition" data-aos="flip-left" data-aos-delay="200">
                 <div class="text-6xl mb-4">🗄️</div>
-                <p class="text-2xl font-bold">Өгөгдлийн сан бааз удирдах</p>
+                <p class="text-2xl font-bold">Өгөгдлийн бааз</p>
             </div>
-            <div class="glass p-8 rounded-3xl text-center hover:scale-110 transition " data-aos="flip-left" data-aos-delay="300">
+            <div class="glass p-8 rounded-3xl text-center hover:scale-110 transition" data-aos="flip-left" data-aos-delay="300">
                 <div class="text-6xl mb-4">🚀</div>
-                <p class="text-2xl font-bold">Систем байрлуулах, ажиллуулах</p>
+                <p class="text-2xl font-bold">Систем байршуулалт</p>
             </div>
         </div>
     </div>
@@ -140,88 +333,63 @@
 <!-- Projects -->
 <section id="projects" class="py-32 px-6">
     <div class="max-w-7xl mx-auto">
-        <h2 class="text-6xl font-black text-center mb-20" data-aos="fade-up">Programm</h2>
+        <h2 class="text-6xl font-black text-center mb-20 gradient-animated" data-aos="fade-up">Top 6 Програм</h2>
         <div class="grid md:grid-cols-3 gap-10">
-            <!-- 3D Project Card -->
-            <div class="group glass rounded-3xl overflow-hidden shadow-2xl hover:shadow-purple-500/50 transition" data-aos="zoom-in">
-                <div class="relative overflow-hidden">
-                    <img src="pic/netflix.png" alt="Project" class="w-full h-64 object-cover group-hover:scale-110 transition duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                    <div class="absolute bottom-6 left-6">
-                        <h3 class="text-3xl font-bold">Visual Studio Code</h3>
-                        <p class="text-gray-300">Код бичих, засах, өргөтгөлүүд ашиглан бүтээхэд хамгийн түгээмэл IDE.</p>
-                    </div>
-                </div>
-                <div class="p-8">
-                    <a href="https://code.visualstudio.com/" target="_blank" class="inline-block px-6 py-3 bg-purple-600 rounded-full hover:bg-purple-700 transition">Дэлгэрэнгүй →</a>
+            <div class="group glass rounded-3xl overflow-hidden hover:shadow-blue-500/50 transition" data-aos="zoom-in">
+                <img src="pic/vscode.jpg" class="w-full h-64 object-cover group-hover:scale-110 transition duration-700">
+                <div class="p-6">
+                    <h3 class="text-3xl font-bold">Visual Studio Code</h3>
+                    <p class="text-gray-300 mb-6">Код бичих, засах IDE.</p>
+                    <a href="https://code.visualstudio.com/" target="_blank" class="btn-gradient bg-blue-600 px-6 py-3 rounded-full inline-block">→ Дэлгэрэнгүй</a>
                 </div>
             </div>
-            <div class="group glass rounded-3xl overflow-hidden shadow-2xl hover:shadow-purple-500/50 transition" data-aos="zoom-in">
-                <div class="relative overflow-hidden">
-                    <img src="pic/netflix.png" alt="Project" class="w-full h-64 object-cover group-hover:scale-110 transition duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                    <div class="absolute bottom-6 left-6">
-                        <h3 class="text-3xl font-bold">Postman</h3>
-                        <p class="text-gray-300">API тестлэх, сервер болон front-end хоорондын өгөгдлийн урсгалыг шалгах хэрэгсэл.</p>
-                    </div>
-                </div>
-                <div class="p-8">
-                    <a href="https://code.visualstudio.com/" target="_blank" class="inline-block px-6 py-3 bg-purple-600 rounded-full hover:bg-purple-700 transition">Дэлгэрэнгүй →</a>
+
+            <div class="group glass rounded-3xl overflow-hidden hover:shadow-blue-500/50 transition" data-aos="zoom-in">
+                <img src="pic/postman.jpg" class="w-full h-64 object-cover group-hover:scale-110 transition duration-700">
+                <div class="p-6">
+                    <h3 class="text-3xl font-bold">Postman</h3>
+                    <p class="text-gray-300 mb-6">API тест хийх хэрэгсэл.</p>
+                    <a href="https://www.postman.com/" target="_blank" class="btn-gradient bg-blue-600 px-6 py-3 rounded-full inline-block">→ Дэлгэрэнгүй</a>
                 </div>
             </div>
-            <div class="group glass rounded-3xl overflow-hidden shadow-2xl hover:shadow-purple-500/50 transition" data-aos="zoom-in">
-                <div class="relative overflow-hidden">
-                    <img src="pic/netflix.png" alt="Project" class="w-full h-64 object-cover group-hover:scale-110 transition duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                    <div class="absolute bottom-6 left-6">
-                        <h3 class="text-3xl font-bold">GitHub</h3>
-                        <p class="text-gray-300">Кодын хувилбар хянах, бусад хөгжүүлэгчидтэй хамтран ажиллах платформ.</p>
-                    </div>
-                </div>
-                <div class="p-8">
-                    <a href="https://code.visualstudio.com/" target="_blank" class="inline-block px-6 py-3 bg-purple-600 rounded-full hover:bg-purple-700 transition">Дэлгэрэнгүй →</a>
+
+            <div class="group glass rounded-3xl overflow-hidden hover:shadow-blue-500/50 transition" data-aos="zoom-in">
+                <img src="pic/github2.png" class="w-full h-64 object-cover group-hover:scale-110 transition duration-700">
+                <div class="p-6">
+                    <h3 class="text-3xl font-bold">GitHub</h3>
+                    <p class="text-gray-300 mb-6">Код хуваалцах платформ.</p>
+                    <a href="https://github.com/" target="_blank" class="btn-gradient bg-blue-600 px-6 py-3 rounded-full inline-block">→ Дэлгэрэнгүй</a>
                 </div>
             </div>
-            <div class="group glass rounded-3xl overflow-hidden shadow-2xl hover:shadow-purple-500/50 transition" data-aos="zoom-in">
-                <div class="relative overflow-hidden">
-                    <img src="pic/netflix.png" alt="Project" class="w-full h-64 object-cover group-hover:scale-110 transition duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                    <div class="absolute bottom-6 left-6">
-                        <h3 class="text-3xl font-bold">Vercel/Netlify</h3>
-                        <p class="text-gray-300">Вэб аппликейшнээ интернетэд байрлуулах, deployment хийхэд ашиглагддаг.</p>
-                    </div>
-                </div>
-                <div class="p-8">
-                    <a href="https://code.visualstudio.com/" target="_blank" class="inline-block px-6 py-3 bg-purple-600 rounded-full hover:bg-purple-700 transition">Дэлгэрэнгүй →</a>
+
+            <div class="group glass rounded-3xl overflow-hidden hover:shadow-blue-500/50 transition" data-aos="zoom-in">
+                <img src="pic/netlify.png" class="w-full h-64 object-cover group-hover:scale-110 transition duration-700">
+                <div class="p-6">
+                    <h3 class="text-3xl font-bold">Netlify / Vercel</h3>
+                    <p class="text-gray-300 mb-6">Вэб байршуулалтын платформ.</p>
+                    <a href="https://vercel.com/" target="_blank" class="btn-gradient bg-blue-600 px-6 py-3 rounded-full inline-block">Vercel →</a>
+                    <a href="https://www.netlify.com/" target="_blank" class="btn-gradient bg-blue-600 px-6 py-3 rounded-full inline-block">Netlify →</a>
                 </div>
             </div>
-            <div class="group glass rounded-3xl overflow-hidden shadow-2xl hover:shadow-purple-500/50 transition" data-aos="zoom-in">
-                <div class="relative overflow-hidden">
-                    <img src="pic/netflix.png" alt="Project" class="w-full h-64 object-cover group-hover:scale-110 transition duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                    <div class="absolute bottom-6 left-6">
-                        <h3 class="text-3xl font-bold">Figma</h3>
-                        <p class="text-gray-300">Хэрэглэгчийн интерфейс болон вэб дизайн бүтээхэд зориулсан UI/UX дизайн хэрэгсэл.</p>
-                    </div>
-                </div>
-                <div class="p-8">
-                    <a href="https://code.visualstudio.com/" target="_blank" class="inline-block px-6 py-3 bg-purple-600 rounded-full hover:bg-purple-700 transition">Дэлгэрэнгүй →</a>
+
+            <div class="group glass rounded-3xl overflow-hidden hover:shadow-blue-500/50 transition" data-aos="zoom-in">
+                <img src="pic/figma.png" class="w-full h-64 object-cover group-hover:scale-110 transition duration-700">
+                <div class="p-6">
+                    <h3 class="text-3xl font-bold">Figma</h3>
+                    <p class="text-gray-300 mb-6">UI/UX дизайн хэрэгсэл.</p>
+                    <a href="https://www.figma.com/" target="_blank" class="btn-gradient bg-blue-600 px-6 py-3 rounded-full inline-block">→ Дэлгэрэнгүй</a>
                 </div>
             </div>
-            <div class="group glass rounded-3xl overflow-hidden shadow-2xl hover:shadow-purple-500/50 transition" data-aos="zoom-in">
-                <div class="relative overflow-hidden">
-                    <img src="pic/netflix.png" alt="Project" class="w-full h-64 object-cover group-hover:scale-110 transition duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                    <div class="absolute bottom-6 left-6">
-                        <h3 class="text-3xl font-bold">MongoDB Compass / MySQL Workbench</h3>
-                        <p class="text-gray-300">Өгөгдлийн бааз удирдах, өгөгдөл харах, бүтэц боловсруулах програмууд.</p>
-                    </div>
-                </div>
-                <div class="p-8">
-                    <a href="https://code.visualstudio.com/" target="_blank" class="inline-block px-6 py-3 bg-purple-600 rounded-full hover:bg-purple-700 transition">Дэлгэрэнгүй →</a>
+
+            <div class="group glass rounded-3xl overflow-hidden hover:shadow-blue-500/50 transition" data-aos="zoom-in">
+                <img src="pic/mongodb.png" class="w-full h-64 object-cover group-hover:scale-110 transition duration-700">
+                <div class="p-6">
+                    <h3 class="text-3xl font-bold">MongoDB / MySQL</h3>
+                    <p class="text-gray-300 mb-6">Өгөгдлийн баазууд.</p>
+                    <a href="https://www.mongodb.com/" target="_blank" class="btn-gradient bg-blue-600 px-6 py-3 rounded-full inline-block">MongoDB →</a>
+                    <a href="https://www.mysql.com/" target="_blank" class="btn-gradient bg-blue-600 px-6 py-3 rounded-full inline-block">MySQL →</a>
                 </div>
             </div>
-            <!-- Дахин 2 удаа копи хийгээд зураг, нэрээ соль -->
         </div>
     </div>
 </section>
@@ -229,11 +397,14 @@
 <!-- Contact -->
 <section id="contact" class="py-32 px-6">
     <div class="max-w-4xl mx-auto text-center glass rounded-3xl p-16" data-aos="fade-up">
-        <h2 class="text-6xl font-black mb-10">ХОЛБОО БАРИХ</h2>
-        <p class="text-2xl mb-10">Төсөл хийлгэх эсвэл ярилцахыг хүсвэл:</p>
-        <a href="mailto:info@khankhulgun.mn" class="text-xl  text-purple-400 hover:text-pink-400 hover:scale-150 transition font-mono">info@khankhulgun.mn</a>
+        <h2 class="text-6xl font-black mb-10 gradient-animated">НИЙТ ДҮГНЭЛТ</h2>
+        <p class="text-2xl mb-10 text-gray-300">
+            Full Stack Developer бол технологийн ертөнцөд хамгийн эрэлттэй, бүх талын мэдлэгтэй инженер юм.
+            Тэд бүтээлч сэтгэлгээ, логик сэтгэлгээ хоёрыг хослуулж, орчин үеийн дижитал бүтээгдэхүүн бүтээдэг.
+        </p>
+        <a href="mailto:info@khankhulgun.mn" class="text-xl text-blue-400 hover:text-indigo-400 hover:scale-125 transition font-mono">info@khankhulgun.mn</a>
         <div class="mt-10 flex justify-center space-x-8">
-            <a href="#" class="text-2xl hover:scale-110 transition">📞96021010</a>
+            <a href="tel:96021010" class="text-2xl hover:scale-110 transition hover:text-blue-400">📞 96021010</a>
         </div>
     </div>
 </section>
@@ -245,43 +416,100 @@
 
 <!-- Scripts -->
 <script>
-    // Lucide icons
     lucide.createIcons();
-
-    // Typed.js
     new Typed('#typed', {
         strings: ['Юу хийдэг вэ?', 'Ямар программ ашигладаг вэ?', 'Яагаад бид хэрэгтэй гэж?', 'Coffee Addict ☕'],
         typeSpeed: 70,
         backSpeed: 50,
         loop: true
     });
+    particlesJS('particles-js', {"particles":{"number":{"value":80},"color":{"value":"#003cff"},"shape":{"type":"circle"},"opacity":{"value":1},"size":{"value":3},"move":{"speed":1}},"interactivity":{"events":{"onhover":{"enable":true,"mode":"repulse"}}}});
+    AOS.init({ 
+        duration: 1200,
+        once: true,
+        offset: 100
+    });
 
-    // Particles.js
-    particlesJS('particles-js', {
-        "particles": {
-            "number": { "value": 80 },
-            "color": { "value": "#a855f7" },
-            "shape": { "type": "circle" },
-            "opacity": { "value": 0.5 },
-            "size": { "value": 3 },
-            "move": { "speed": 1 }
-        },
-        "interactivity": {
-            "events": {
-                "onhover": { "enable": true, "mode": "repulse" }
-            }
+    // Scroll Progress Bar
+    window.addEventListener('scroll', () => {
+        const scrollProgress = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+        document.getElementById('scroll-progress').style.width = scrollProgress + '%';
+    });
+
+    // Navbar Scroll Effect
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+        const navbar = document.getElementById('navbar');
+        
+        if (currentScroll > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
         }
     });
 
-    // AOS Init
-    AOS.init({ duration: 1200 });
-
     // Mobile Menu
-    document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-        document.getElementById('mobile-menu').classList.toggle('hidden');
-    });
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuClose = document.getElementById('mobile-menu-close');
+    
+    function openMobileMenu() {
+        if (mobileMenu) {
+            mobileMenu.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            const icon = mobileMenuBtn?.querySelector('i');
+            if (icon) {
+                icon.setAttribute('data-lucide', 'x');
+                lucide.createIcons();
+            }
+        }
+    }
+    
+    function closeMobileMenu() {
+        if (mobileMenu) {
+            mobileMenu.classList.add('hidden');
+            document.body.style.overflow = '';
+            const icon = mobileMenuBtn?.querySelector('i');
+            if (icon) {
+                icon.setAttribute('data-lucide', 'menu');
+                lucide.createIcons();
+            }
+        }
+    }
+    
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (mobileMenu && mobileMenu.classList.contains('hidden')) {
+                openMobileMenu();
+            } else {
+                closeMobileMenu();
+            }
+        });
+    }
+    
+    if (mobileMenuClose) {
+        mobileMenuClose.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeMobileMenu();
+        });
+    }
 
-    // 3D Tilt Effect
+    if (mobileMenu) {
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                closeMobileMenu();
+            });
+        });
+        
+        mobileMenu.addEventListener('click', (e) => {
+            if (e.target === mobileMenu) {
+                closeMobileMenu();
+            }
+        });
+    }
+
+    // 3D Tilt Effect for Skill Cards
     document.querySelectorAll('.tilt-card').forEach(card => {
         card.addEventListener('mousemove', (e) => {
             const rect = card.getBoundingClientRect();
@@ -298,4 +526,6 @@
         });
     });
 </script>
+
 </body>
+</html>
