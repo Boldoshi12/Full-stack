@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="mn" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Full Stack Developer</title>
+
+    <link rel="stylesheet" href="src/output.css">
+
+    <!-- Fonts: Google Fonts + Custom -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=JetBrains+Mono&display swap" rel="stylesheet">
+
+    <!-- Icons: Lucide -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- Typed.js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <!-- Particles.js (background effect) -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <!-- AOS Scroll Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=JetBrains+Mono&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* 3D Card Tilt */
+        .tilt-card {
+            transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+            transition: all 0.4s ease;
+        }
+    </style>
+</head>
+<body class="bg-black text-white overflow-x-hidden">
+
+<!-- Particle Background -->
+<div id="particles-js" class="fixed inset-0 -z-10"></div>
+
+<!-- Navigation -->
+<nav class="fixed top-0 w-full z-50 glass">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+        <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">FULL STACK DEVELOPER</h1>
+        <div class="hidden md:flex space-x-8">
+            <a href="index.html" class="hover:text-purple-400 transition">Нүүр</a>
+            <a href="about.html" class="hover:text-purple-400 transition">Тухай</a>
+            <a href="skills.html" class="hover:text-purple-400 transition">Ур чадвар</a>
+            <a href="projects.html" class="hover:text-purple-400 transition">Бүтээл</a>
+            <a href="contact.html" class="hover:text-purple-400 transition">Холбогдох</a>
+        </div>
+        <button id="mobile-menu-btn" class="md:hidden">
+            <i data-lucide="menu" class="w-8 h-8"></i>
+        </button>
+    </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="fixed inset-0 bg-black/95 z-40 hidden flex-col items-center justify-center space-y-8 text-3xl">
+    <a href="index.html" class="hover:text-purple-400">Нүүр</a>
+    <a href="#about" class="hover:text-purple-400">Тухай</a>
+    <a href="#projects" class="hover:text-purple-400">Төсөл</a>
+    <a href="#contact" class="hover:text-purple-400">Холбогдох</a>
+</div>
+
+<!-- HERO -->
+<section id="home" class="min-h-screen flex items-center justify-center relative">
+    <div class="text-center px-6" data-aos="zoom-in">
+        <h1 class="text-6xl md:text-9xl font-black mb-6">
+        <span class="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent">
+          FULL STACK DEVELOPER
+        </span>
+        </h1>
+        <p class="text-3xl md:text-5xl mb-6 font-light">Бид <span id="typed" class="text-purple-400 font-bold"></span></p>
+        <p class="text-xl md:text-2xl text-gray-400 mb-10">Орчин үеийн технологийн салбарын хамгийн эрэлттэй мэргэжилтэн</p>
+
+        <div class="flex justify-center space-x-6 mb-10">
+            <a href="#" class="p-4 rounded-full glass hover:scale-125 transition"><i data-lucide="github" class="w-8 h-8"></i></a>
+            <a href="#" class="p-4 rounded-full glass hover:scale-125 transition"><i data-lucide="linkedin" class="w-8 h-8"></i></a>
+            <a href="#" class="p-4 rounded-full glass hover:scale-125 transition"><i data-lucide="twitter" class="w-8 h-8"></i></a>
+        </div>
+
+        <a href="https://www.youtube.com/watch?v=oOx5QnGhMmY" class="inline-block px-12 py-6 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full text-2xl font-bold hover:shadow-2xl hover:scale-110 transition transform">
+            Илүү дэлгэрэнгүй мэдэх.
+        </a>
+    </div>
+</section>
+
+<!-- About -->
+<section id="about" class="py-32 px-6">
+    <div class="max-w-5xl mx-auto text-center" data-aos="fade-up">
+        <h2 class="text-6xl font-black mb-10">FULL-STACK DEVELOPER ГЭЖ ХЭН БЭ? ЮУ ХИЙДЭГ ВЭ?</h2>
+        <p class="text-xl leading-relaxed text-gray-300 ">
+            <span class="text-red-400 hover:scale-110 hover:font-bold cursor-pointer select-none">Full Stack Developer буюу хөгжүүлэгч</span>
+            <br>
+            гэдэг нь вэб болон аппликейшнийг бүтээхэд шаардагдах бүх шатны ажлыг хэрэглэгчийн <br>
+            <span class="text-purple-400 hover:scale-110 hover:font-bold cursor-pointer select-none">интерфейсийн дизайн, серверийн логик, өгөгдлийн баазын зохион байгуулалт, өгөгдөл дамжуулах API</span>
+            <br>болон системийн байршуулалт зэрэг бүх процессыг дангаараа гүйцэтгэж чаддаг
+            <span class="text-pink-500 hover:scale-110 hover:font-bold cursor-pointer select-none">программ хангамжийн инженер</span>ийг хэлдэг. Тэд хэрэглэгчийн харж, ашигладаг хэсэг болох Front-end болон серверийн дотоод ажиллагаа, өгөгдлийн урсгалыг хариуцдаг Back-end хэсгийг хоёуланг нь хөгжүүлдэг.
+        </p>
+    </div>
+</section>
+
+<!-- Skills -->
+<section id="skills" class="py-32 px-6 ">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-6xl font-black text-center mb-20" data-aos="fade-up">Бидний хийдэг гол зүйлс</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <!-- Skill Card -->
+            <div class="glass p-8 rounded-3xl text-center hover:scale-110 transition " data-aos="flip-right">
+                <div class="text-6xl mb-4">💻</div>
+                <p class="text-2xl font-bold">Front/Back-End Хөгжүүлэлт</p>
+            </div>
+            <div class="glass p-8 rounded-3xl text-center hover:scale-110 transition " data-aos="flip-right" data-aos-delay="100">
+                <div class="text-6xl mb-4">🔗</div>
+                <p class="text-2xl font-bold">API холболт хийх(Front/Back-End холболт)</p>
+            </div>
+            <div class="glass p-8 rounded-3xl text-center hover:scale-110 transition " data-aos="flip-left" data-aos-delay="200">
+                <div class="text-6xl mb-4">🗄️</div>
+                <p class="text-2xl font-bold">Өгөгдлийн сан бааз удирдах</p>
+            </div>
+            <div class="glass p-8 rounded-3xl text-center hover:scale-110 transition " data-aos="flip-left" data-aos-delay="300">
+                <div class="text-6xl mb-4">🚀</div>
+                <p class="text-2xl font-bold">Систем байрлуулах, ажиллуулах</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Projects -->
+<section id="projects" class="py-32 px-6">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-6xl font-black text-center mb-20" data-aos="fade-up">Programm</h2>
+        <div class="grid md:grid-cols-3 gap-10">
+            <!-- 3D Project Card -->
+            <div class="group glass rounded-3xl overflow-hidden shadow-2xl hover:shadow-purple-500/50 transition" data-aos="zoom-in">
+                <div class="relative overflow-hidden">
+                    <img src="pic/netflix.png" alt="Project" class="w-full h-64 object-cover group-hover:scale-110 transition duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-6 left-6">
+                        <h3 class="text-3xl font-bold">Visual Studio Code</h3>
+                        <p class="text-gray-300">Код бичих, засах, өргөтгөлүүд ашиглан бүтээхэд хамгийн түгээмэл IDE.</p>
+                    </div>
+                </div>
+                <div class="p-8">
+                    <a href="https://code.visualstudio.com/" target="_blank" class="inline-block px-6 py-3 bg-purple-600 rounded-full hover:bg-purple-700 transition">Дэлгэрэнгүй →</a>
+                </div>
+            </div>
+            <div class="group glass rounded-3xl overflow-hidden shadow-2xl hover:shadow-purple-500/50 transition" data-aos="zoom-in">
+                <div class="relative overflow-hidden">
+                    <img src="pic/netflix.png" alt="Project" class="w-full h-64 object-cover group-hover:scale-110 transition duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-6 left-6">
+                        <h3 class="text-3xl font-bold">Postman</h3>
+                        <p class="text-gray-300">API тестлэх, сервер болон front-end хоорондын өгөгдлийн урсгалыг шалгах хэрэгсэл.</p>
+                    </div>
+                </div>
+                <div class="p-8">
+                    <a href="https://code.visualstudio.com/" target="_blank" class="inline-block px-6 py-3 bg-purple-600 rounded-full hover:bg-purple-700 transition">Дэлгэрэнгүй →</a>
+                </div>
+            </div>
+            <div class="group glass rounded-3xl overflow-hidden shadow-2xl hover:shadow-purple-500/50 transition" data-aos="zoom-in">
+                <div class="relative overflow-hidden">
+                    <img src="pic/netflix.png" alt="Project" class="w-full h-64 object-cover group-hover:scale-110 transition duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-6 left-6">
+                        <h3 class="text-3xl font-bold">GitHub</h3>
+                        <p class="text-gray-300">Кодын хувилбар хянах, бусад хөгжүүлэгчидтэй хамтран ажиллах платформ.</p>
+                    </div>
+                </div>
+                <div class="p-8">
+                    <a href="https://code.visualstudio.com/" target="_blank" class="inline-block px-6 py-3 bg-purple-600 rounded-full hover:bg-purple-700 transition">Дэлгэрэнгүй →</a>
+                </div>
+            </div>
+            <div class="group glass rounded-3xl overflow-hidden shadow-2xl hover:shadow-purple-500/50 transition" data-aos="zoom-in">
+                <div class="relative overflow-hidden">
+                    <img src="pic/netflix.png" alt="Project" class="w-full h-64 object-cover group-hover:scale-110 transition duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-6 left-6">
+                        <h3 class="text-3xl font-bold">Vercel/Netlify</h3>
+                        <p class="text-gray-300">Вэб аппликейшнээ интернетэд байрлуулах, deployment хийхэд ашиглагддаг.</p>
+                    </div>
+                </div>
+                <div class="p-8">
+                    <a href="https://code.visualstudio.com/" target="_blank" class="inline-block px-6 py-3 bg-purple-600 rounded-full hover:bg-purple-700 transition">Дэлгэрэнгүй →</a>
+                </div>
+            </div>
+            <div class="group glass rounded-3xl overflow-hidden shadow-2xl hover:shadow-purple-500/50 transition" data-aos="zoom-in">
+                <div class="relative overflow-hidden">
+                    <img src="pic/netflix.png" alt="Project" class="w-full h-64 object-cover group-hover:scale-110 transition duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-6 left-6">
+                        <h3 class="text-3xl font-bold">Figma</h3>
+                        <p class="text-gray-300">Хэрэглэгчийн интерфейс болон вэб дизайн бүтээхэд зориулсан UI/UX дизайн хэрэгсэл.</p>
+                    </div>
+                </div>
+                <div class="p-8">
+                    <a href="https://code.visualstudio.com/" target="_blank" class="inline-block px-6 py-3 bg-purple-600 rounded-full hover:bg-purple-700 transition">Дэлгэрэнгүй →</a>
+                </div>
+            </div>
+            <div class="group glass rounded-3xl overflow-hidden shadow-2xl hover:shadow-purple-500/50 transition" data-aos="zoom-in">
+                <div class="relative overflow-hidden">
+                    <img src="pic/netflix.png" alt="Project" class="w-full h-64 object-cover group-hover:scale-110 transition duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-6 left-6">
+                        <h3 class="text-3xl font-bold">MongoDB Compass / MySQL Workbench</h3>
+                        <p class="text-gray-300">Өгөгдлийн бааз удирдах, өгөгдөл харах, бүтэц боловсруулах програмууд.</p>
+                    </div>
+                </div>
+                <div class="p-8">
+                    <a href="https://code.visualstudio.com/" target="_blank" class="inline-block px-6 py-3 bg-purple-600 rounded-full hover:bg-purple-700 transition">Дэлгэрэнгүй →</a>
+                </div>
+            </div>
+            <!-- Дахин 2 удаа копи хийгээд зураг, нэрээ соль -->
+        </div>
+    </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="py-32 px-6">
+    <div class="max-w-4xl mx-auto text-center glass rounded-3xl p-16" data-aos="fade-up">
+        <h2 class="text-6xl font-black mb-10">ХОЛБОО БАРИХ</h2>
+        <p class="text-2xl mb-10">Төсөл хийлгэх эсвэл ярилцахыг хүсвэл:</p>
+        <a href="mailto:info@khankhulgun.mn" class="text-xl  text-purple-400 hover:text-pink-400 hover:scale-150 transition font-mono">info@khankhulgun.mn</a>
+        <div class="mt-10 flex justify-center space-x-8">
+            <a href="#" class="text-2xl hover:scale-110 transition">📞96021010</a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-10 text-center text-gray-500">
+    <p>&copy; 2025 Khan Khulgun. Бүх эрх хуулиар хамгаалагдсан.</p>
+</footer>
+
+<!-- Scripts -->
+<script>
+    // Lucide icons
+    lucide.createIcons();
+
+    // Typed.js
+    new Typed('#typed', {
+        strings: ['Юу хийдэг вэ?', 'Ямар программ ашигладаг вэ?', 'Яагаад бид хэрэгтэй гэж?', 'Coffee Addict ☕'],
+        typeSpeed: 70,
+        backSpeed: 50,
+        loop: true
+    });
+
+    // Particles.js
+    particlesJS('particles-js', {
+        "particles": {
+            "number": { "value": 80 },
+            "color": { "value": "#a855f7" },
+            "shape": { "type": "circle" },
+            "opacity": { "value": 0.5 },
+            "size": { "value": 3 },
+            "move": { "speed": 1 }
+        },
+        "interactivity": {
+            "events": {
+                "onhover": { "enable": true, "mode": "repulse" }
+            }
+        }
+    });
+
+    // AOS Init
+    AOS.init({ duration: 1200 });
+
+    // Mobile Menu
+    document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+        document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+
+    // 3D Tilt Effect
+    document.querySelectorAll('.tilt-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+        });
+    });
+</script>
+</body>
